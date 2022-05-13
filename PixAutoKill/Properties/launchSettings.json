@@ -2,7 +2,7 @@
   "profiles": {
     "PixAutoKill": {
       "commandName": "Project",
-      "commandLineArgs": "/name:Notepad /maxmem:5000 /timeout:5000 /retry:3"
+      "commandLineArgs": "/name:Notepad /maxmem:5000 /timeout:5000 /retry:3 /log"
     }
   }
 }

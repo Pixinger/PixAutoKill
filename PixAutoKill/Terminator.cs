@@ -20,7 +20,7 @@ namespace PixAutoKill
 
         public Task<bool> Terminate(Process process)
         {
-            Console.WriteLine($"Process '{process.ProcessName}/{process.Id}' exceeded memory limit with {process.WorkingSet64} bytes.");
+            Logger.Info($"Process '{process.ProcessName}/{process.Id}' exceeded memory limit with {process.WorkingSet64} bytes.");
 
             return Task.Run<bool>(() =>
             {
@@ -32,7 +32,7 @@ namespace PixAutoKill
                     _retryCount++; // It's called "re"tryCount not "try"Count.
                     while (_retryCount-- > 0)
                     {
-                        Console.WriteLine($"{title}: - Terminating ... ");
+                        Logger.Info($"{title}: - Terminating ... ");
                         process.Kill(true);
                         long tick = Environment.TickCount64 + _enforcedTerminationDelay_ms;
                         while ((!process.HasExited) && (Environment.TickCount64 < tick))
@@ -42,18 +42,18 @@ namespace PixAutoKill
 
                         if (process.HasExited)
                         {
-                            Console.WriteLine($"{title}: - Terminating OK.");
+                            Logger.Info($"{title}: - Terminating OK.");
                             return true;
                         }
 
-                        Console.WriteLine($"{title}: - Terminating FAILED.");
+                        Logger.Warn($"{title}: - Terminating FAILED.");
                     }
 
                     return false;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Unexpected exception: {ex.Message}");
+                    Logger.Error($"Unexpected exception (1): {ex.Message}");
                     return false;
                 }
             });
@@ -90,7 +90,7 @@ namespace PixAutoKill
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected exception: ", ex.Message);
+                Logger.Error($"Unexpected exception (2): {ex.Message}");
                 return 0;
             }
         }

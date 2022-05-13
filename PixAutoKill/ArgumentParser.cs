@@ -79,5 +79,23 @@ namespace PixAutoKill
                 return 0;
             }
         }
+        public static bool Log(string[] args)
+        {
+            try
+            {
+                foreach (string arg in args)
+                {
+                    if (arg.ToLower().StartsWith("/log"))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

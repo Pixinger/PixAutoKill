@@ -8,8 +8,14 @@ namespace PixAutoKill
         // /maxmem:4000000  =>(bytes)
         // /timeout:5000
         // /retry:3
+        // /log
         public static int Main(string[] args)
         {
+            if (ArgumentParser.Log(args))
+            {
+                Logger.Enabled = true;
+            }
+
             long maxbytes = ArgumentParser.MemoryLimit(args);
             string processName = ArgumentParser.ProcessName(args);
             if (string.IsNullOrWhiteSpace(processName))
